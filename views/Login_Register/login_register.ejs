@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="./css/login_register.css">	
+<div class="background">
+</div> 
+
+</div>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="" method="POST">
+			<h1>Create Account</h1>
+			<span>or use your email for registration</span>
+			<input type="email" name="email" placeholder="Email"/>
+			<input type="password" name="password" placeholder="Password"/>
+			<button type="submit">Next</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="">
+			<h1>Sign in</h1>
+			<span>or use your account</span>
+			<input name="email" type="email" placeholder="Email" />
+			<input name="password" type="password" placeholder="Password" />
+			<a href="#">Forgot your password?</a>
+			<button id="SignIn">Sign In</button>
+		</form>
+	</div>
+	<div class="form-container identitas-container">
+		<form action="/users" method="POST">
+			<h1 style="text-align: center;">Identitas Lengkap</h1>
+			<span>Masukkan data Diri</span>
+			<div class="center-form">
+				<div class="center-form-left">
+					<input type="text" id="Fname" name="nama_depan" placeholder="First Name" />
+					<input type="text" id="Lname" name="nama_belakang" placeholder="Last Name" />
+					<input type="text" id="phone" name="phone" placeholder="Phone" />
+					<div class="gender-input">
+						<label for="gender">Gender:</label>
+						<input type="radio" id="gender-male" name="gender" value="Laki-Laki"> Laki-Laki
+						<input type="radio" id="gender-female" name="gender" value="Perempuan"> Perempuan
+					</div>
+				</div>
+				<div class="center-form-right">
+					<input type="text" id="fakultas" name="fakultas" placeholder="Fakultas" />
+					<input type="text" id="prodi" name="program_studi" placeholder="Program Studi" />
+					<input type="text" id="nim" name="nim" placeholder="Nomor Induk Mahasiswa" />
+					
+				</div>
+			</div>
+			<br>
+			<button id="submitSignup">Sign Up</button>
+		</form>
+		
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="./js/login_register.js"></script>

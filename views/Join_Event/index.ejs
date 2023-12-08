@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="./css/JoinEvent.css" />
+
+<div class="content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="row align-items-center">
+          <div class="col-lg-7 mb-5 mb-lg-0">
+            <h2 class="mb-5">Join Event</h2>
+
+            <form
+              class="border-right pr-5 mb-5"
+              method="post"
+              id="JoinEvent"
+              name="JoinEvent"
+            >
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <input type="text" class="form-control" name="nama" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="email"
+                    id="email"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <textarea
+                    class="form-control"
+                    name="alasan_join"
+                    id="AlasanJoin"
+                    cols="30"
+                    rows="5"
+                    style="height: 150px"
+                    placeholder="Tulis Alasan Join Event"
+                  ></textarea>
+                </div>
+              </div>
+              <br />
+
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label for="cv" id="file-label">CV</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    name="cv"
+                    id="cv"
+                    accept=".pdf, .doc, .docx"
+                  />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-md-2">
+                  <input
+                    type="button"
+                    value="Cancel"
+                    class="btn btn-secondary rounded-0 py-2 px-4"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <input
+                    type="submit"
+                    value="Submit Request"
+                    class="btn btn-submit rounded-0 py-2 px-4"
+                  />
+                  <span class="submitting"></span>
+                </div>
+              </div>
+            </form>
+
+            <div id="form-message-warning mt-4"></div>
+            <div id="form-message-success">
+              Your Request was sent, thank you!
+            </div>
+          </div>
+          <div class="col-lg-4 ml-auto">
+            <h3 class="mb-4">Join Us</h3>
+            <p>
+              Kami sedang mencari individu yang bersemangat dan berbakat untuk
+              bergabung dengan kami dalam menyelenggarakan acara yang luar
+              biasa. Kepanitiaan adalah kesempatan luar biasa untuk berkembang,
+              berkontribusi, dan membangun kenangan bersama.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/JoinEvent.js"></script>
