@@ -23,12 +23,12 @@ signInButton.addEventListener('click', () => {
     overlayContainer.style.display = 'block';
 });
 
-submitButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    container.classList.remove("right-panel-active");
-    document.title = "Identitas Lengkap";
-    identitasContainer.style.display = 'block';
-    signContainer.style.display = 'none';
-    signUpContainer.style.display = 'none';
-    overlayContainer.style.display = 'none';
-});
+// submitButton.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     container.classList.remove("right-panel-active");
+//     document.title = "Identitas Lengkap";
+//     identitasContainer.style.display = 'block';
+//     signContainer.style.display = 'none';
+//     signUpContainer.style.display = 'none';
+//     overlayContainer.style.display = 'none';
+// });
