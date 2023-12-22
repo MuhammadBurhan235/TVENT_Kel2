@@ -107,12 +107,64 @@ app.get("/list-event", (req, res) => {
   });
 });
 
-app.get("/my-event", (req, res) => {
-  res.render("MyEvent/index", {
-    title: "My Event",
-    layout: "layouts/main-layout",
-    phone_number: "+62 858 1564 8255",
-  });
+app.get("/my-event", async (req, res) => {
+  try {
+    const dummyEvents = [
+      {
+        id: 1,
+        nama_event: "Islah 2023",
+        klasifikasi_divisi: "Divisi Acara",
+        imagePath: "/img/tu1.jpg",
+      },
+      {
+        id: 2,
+        nama_event: "Ecafest",
+        klasifikasi_divisi: "Divisi Humas",
+        imagePath: "/img/event.jpeg",
+      },
+      {
+        id: 3,
+        nama_event: "Abogoboga",
+        klasifikasi_divisi: "Divisi Keamanan",
+        imagePath: "/img/tu3.jpg",
+      },
+      {
+        id: 4,
+        nama_event: "Asidiai",
+        klasifikasi_divisi: "Divisi HSE",
+        imagePath: "/img/tu3.jpg",
+      },
+      {
+        id: 5,
+        nama_event: "Ululu",
+        klasifikasi_divisi: "Divisi Acaca",
+        imagePath: "/img/download.jpeg",
+      },
+    ];
+    const EVENTS_PER_PAGE = 3;
+
+    // Get the current page from the query parameters
+    const currentPage = parseInt(req.query.page) || 1;
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(dummyEvents.length / EVENTS_PER_PAGE);
+
+    // Slice the events array based on the current page
+    const eventsToShow = dummyEvents.slice((currentPage - 1) * EVENTS_PER_PAGE, currentPage * EVENTS_PER_PAGE);
+
+    res.render("MyEvent/index", {
+      title: "My Event",
+      layout: "layouts/main-layout",
+      phone_number: "+62 858 1564 8255",
+      events: eventsToShow,
+      currentPage: currentPage,
+      totalPages: totalPages,
+      EVENTS_PER_PAGE: EVENTS_PER_PAGE,
+    });
+  } catch (error) {
+    console.error("Error in /my-event route:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/profile-event", (req, res) => {
@@ -123,12 +175,48 @@ app.get("/profile-event", (req, res) => {
   });
 });
 
-app.get("/join-event", (req, res) => {
-  res.render("Join_Event/index", {
-    title: "Join Event",
-    layout: "layouts/main-layout",
-    phone_number: "+62 858 1564 8255",
-  });
+app.get("/join-event", async (req, res) => {
+  try {
+    const userEmail = req.session.user;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        nama_depan: true,
+        nama_belakang: true,
+        email: true,
+      },
+    });
+
+    if (!user) {
+      // Handle the case where the user is not found
+      return res.status(404).send("User not found");
+    }
+
+    const eventData = {
+      nama_event: "ISLAH 2023",
+      klasifikasi_divisi: "ACARA",
+    };
+
+    const fullName = `${user.nama_depan} ${user.nama_belakang}`;
+
+    res.render("Join_Event/index", {
+      title: "Join Event",
+      layout: "layouts/main-layout",
+      phone_number: "+62 858 1564 8255",
+      nama_event: eventData.nama_event,
+      klasifikasi_divisi: eventData.klasifikasi_divisi,
+      user: {
+        name: fullName,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error("Error in /join-event route:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/buat-event", (req, res) => {

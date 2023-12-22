@@ -6,7 +6,7 @@
       <div class="col-md-10">
         <div class="row align-items-center">
           <div class="col-lg-7 mb-5 mb-lg-0">
-            <h2 class="mb-5">Join Event</h2>
+            <h2 class="mb-5" id="Event_Divisi"><%= nama_event %> - <%= klasifikasi_divisi %></h2>
 
             <form
               class="border-right pr-5 mb-5"
@@ -16,16 +16,23 @@
             >
               <div class="row">
                 <div class="col-md-12 form-group">
-                  <input type="text" class="form-control" name="nama" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="name"
+                    value="<%= user.name %>"
+                    readonly
+                  />
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-md-12 form-group">
                   <input
                     type="text"
                     class="form-control"
                     name="email"
                     id="email"
+                    value="<%= user.email %>"
+                    readonly
                   />
                 </div>
               </div>
