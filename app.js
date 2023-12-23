@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 const session = require("express-session");
 const dotenv = require("dotenv")
+const bcrypt = require('bcrypt');
 
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -25,6 +26,13 @@ app.use(session({
     maxAge: 604800000,
   }
 }))
+const notLoggedInMiddleware = (req, res, next) => {
+  if (req.session && req.session.user) {
+    res.redirect("/");
+  } else {
+    next();
+  }
+};
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -56,22 +64,69 @@ app.get("/login", (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;  
+  const { email, password } = req.body;
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).redirect("/login");
     }
-  });
 
-  if (user && password == user.password) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      req.session.user = email;
+      res.redirect("/");
+    } else {
+      res.status(401).redirect("/login");
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).redirect("/login");
+  }
+});
+
+
+app.get('/signup', notLoggedInMiddleware, (req, res) => {
+  res.render("Signup/signup", {
+    title: "Sign Up",
+    layout: "layouts/bs-layout",
+  });
+});
+
+app.post('/signup', notLoggedInMiddleware, async (req, res) => {
+  try {
+    const { email, password, nama_depan, nama_belakang, phone, gender, nim, fakultas, program_studi } = req.body;
+
+    // Hash password sebelum menyimpan ke database
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Simpan data pengguna ke dalam database
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        nama_depan,
+        nama_belakang,
+        phone,
+        gender,
+        nim,
+        fakultas,
+        program_studi,
+      },
+    });
+
     req.session.user = email;
     res.redirect("/");
-  } else {
-    res.redirect("/login");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create user' });
   }
-  
-
 });
 
 
