@@ -65,13 +65,14 @@ app.get("/login", (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email,password)
   try {
     const user = await prisma.user.findUnique({
       where: {
         email: email,
       },
     });
+    console.log(user)
 
     if (!user) {
       return res.status(401).redirect("/login");
@@ -273,14 +274,61 @@ app.get("/join-event", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-app.get("/buat-event", (req, res) => {
-  res.render("Buat_Event/index", {
-    title: "Buat Event",
-    layout: "layouts/main-layout",
-    phone_number: "+62 858 1564 8255",
+app.get("/buat-event", async (req, res) => {
+  try{
+    const userEmail = req.session.user;
+    
+  }
+  catch(error){
+    console.error("ada masalah, Error: " +  error)
+  
+  
+  }
+  
+  
+    res.render("Buat_Event/index", {
+      title: "Buat Event",
+      layout: "layouts/main-layout",
+      phone_number: "+62 858 1564 8255",
+    });
   });
-});
+
+  
+app.post("/buat-event", async (req,res)=>{
+  try{
+    const userEmail = req.session.user;
+
+  console.log(req.session.user)/
+    console.log(req.body)
+    const eventData = {
+      email_event: req.session.user,
+      nama_event: req.body.nama_event,
+      deskripsi_event: req.body.deskripsi_event,
+      penyelenggara_event: req.body.penyelenggara_event,
+      klasifikasi_divisi: req.body.divisi.join(', '),
+      benefit_event: req.body.benefit_event,
+      poster_event: req.body.poster_event,
+      kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
+      kepanitiaan_selesai: new Date(req.body.kepanitiaan_selesai),
+      event_mulai: new Date(req.body.event_mulai),
+      event_selesai: new Date(req.body.event_selesai),
+    }
+    console.log(eventData)
+    // console.log(data);
+    const newEvent = await prisma.event.create({
+      data: eventData
+     })
+    console.log("data baru berasil diinput")
+    res.redirect("/")
+
+  }
+  catch(error){
+    console.error("ada masalah, Error: " +  error)
+  
+  
+  }
+
+})
 app.get("/profile", (req, res) => {
   res.render("Profile/Profile.ejs", {
     title: "Profile",

@@ -20,10 +20,11 @@
       <div class="d-flex justify-content-center">
         <h1 class="">Buat Event</h1>
       </div>
-      <form action="/sekretaris">
+      <form method="post" action="/buat-event">
         <div class="mb-3">
-          <label for="nama-event" class="form-label">Nama Event</label>
+          <label for="nama-event" class="form-label" >Nama Event</label>
           <input
+          required
             type="text"
             class="form-control"
             id="nama-event"
@@ -35,10 +36,10 @@
           <label for="deskripsi-event" class="form-label">
             Deskripsi Event</label
           >
-          <textarea
+          <textarea required
             class="form-control"
             id="deskripsi-event"
-            name="deskripsi-event"
+            name="deskripsi_event"
             rows="3"
             placeholder="Contoh: Kajian Milenial merupakan..."
           ></textarea>
@@ -48,7 +49,7 @@
           <label for="penyelenggara-event" class="form-label"
             >Penyelenggara Event</label
           >
-          <input
+          <input required
             type="text"
             class="form-control"
             name="penyelenggara_event"
@@ -57,7 +58,7 @@
           />
         </div>
         <div class="mb-3">
-          <label for="divisi-event" class="form-label">
+          <!-- <label for="divisi-event" class="form-label">
             Divisi, Jumlah orang dibutuhkan & Jobdesk dari divisi
             tersebut</label
           >
@@ -69,11 +70,41 @@
             placeholder="Contoh:
 # Divisi Acara (10 Orang)
 - Memasikan acara lancar
-- menghubungi pemateri"
-          ></textarea>
+- menghubungi pemateri" -->
+
+          <!-- ></textarea> -->
+          <label for="divisi-event" class="form-label">
+            Divisi Yang Dibutuhkan
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" name="divisi[]" value="Divisi Acara"> 
+            Divisi Acara
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" name="divisi[]" value="Divisi Media"> 
+            Divisi Media
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" name="divisi[]" value="Divisi Logistik"> 
+            Divisi Logistik
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" name="divisi[]" value="Divisi Dekorasi"> 
+            Divisi Dekorasi
+          </label>
+          <br>
+          <label>
+            <input type="checkbox" name="divisi[]" value="Divisi Inti"> 
+            Divisi Inti
+          </label>
+          <br>
         </div>
         <div class="mb-3">
-          <label for="benefit-event" class="form-label">
+          <label for="benefit_event" class="form-label">
             Benefit Mengikuti Event</label
           >
           <textarea
@@ -93,7 +124,7 @@
               <label for="kepanitiaan-mulai" class="form-label"
                 >Waktu kepanitiaan Mulai</label
               >
-              <input
+              <input required
                 type="datetime-local"
                 class="form-control"
                 id="kepanitiaan-mulai"
@@ -106,7 +137,7 @@
               <label for="kepanitiaan-selesai" class="form-label"
                 >Waktu kepanitiaan Selesai</label
               >
-              <input
+              <input required
                 type="datetime-local"
                 class="form-control"
                 id="kepanitiaan-selesai"
@@ -121,7 +152,7 @@
               <label for="event-mulai" class="form-label"
                 >Waktu Event Mulai</label
               >
-              <input
+              <input required
                 type="datetime-local"
                 class="form-control"
                 id="event-mulai"
@@ -134,7 +165,7 @@
               <label for="event-selesai" class="form-label"
                 >Waktu Event Selesai</label
               >
-              <input
+              <input required
                 type="datetime-local"
                 class="form-control"
                 id="event-selesai"
@@ -145,10 +176,10 @@
           <div class="col-6">
             <div class="mb-3">
               <label for="poster-acara" class="form-label"
-                >Poster Pendaftaran</label
+                >Link Poster Pendaftaran</label
               >
               <input
-                type="file"
+                type="text"
                 class="form-control"
                 id="poster-acara"
                 name="poster_event"
