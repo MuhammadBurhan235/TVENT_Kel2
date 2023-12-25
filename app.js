@@ -228,6 +228,9 @@ app.get("/profile-event", (req, res) => {
     title: "Provile Event",
     layout: "layouts/main-layout",
     phone_number: "+62 858 1564 8255",
+    // mengambil isi data dari event yang dipilih (berdasarkan id)
+    // ubah klasifikasi event dari string menjadi array
+    // kirim semua data yang sudah diambil ke frontend
   });
 });
 
