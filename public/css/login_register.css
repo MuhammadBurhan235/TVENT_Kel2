@@ -344,3 +344,22 @@ select:after {
 #prodi {
     margin-top: 0px;
 }
+label.error {
+    font-size: 8px;
+    color: red;
+    display: inline-block; 
+    margin-top: 5px; 
+}
+
+#message {
+    resize: vertical;
+}
+
+#form-message-warning, #form-message-success {
+    display: none;
+    margin-top: 5px; 
+}
+
+#form-message-warning {
+    color: #B90B0B;
+}

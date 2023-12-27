@@ -3,7 +3,12 @@
   --font-primary: "Montserrat", sans-serif;
   --font-secondary: "Poppins", sans-serif;
 }
-
+.center-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 /* Colors */
 :root {
   --color-default: #222222;
@@ -135,6 +140,7 @@ h6 {
       form .col-md-2 {
         margin-right: 0; 
       }
+      
     }
 
 /*Ini Headernya Gaes*/
@@ -227,39 +233,6 @@ section {
   visibility: visible;
   opacity: 1;
   bottom: 15px;
-}
-
-/*Preloadernya gaes*/
-#preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  overflow: hidden;
-  background: #fff;
-  transition: all 0.6s ease-out;
-}
-
-#preloader:before {
-  content: "";
-  position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #fff;
-  border-color: var(--color-primary) transparent var(--color-primary) transparent;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: animate-preloader 1.5s linear infinite;
-}
-
-@keyframes animate-preloader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 /*Ini buat asos device hp*/
@@ -507,6 +480,7 @@ section {
   .mobile-nav-hide {
     display: none;
   }
+  
 }
 
 /*Mobile Navigationnya*/

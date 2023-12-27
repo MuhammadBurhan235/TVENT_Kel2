@@ -1,4 +1,6 @@
-<link rel="stylesheet" href="./css/JoinEvent.css" />
+<link rel="stylesheet" href="/css/JoinEvent.css" />
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+
 
 <div class="content">
   <div class="container">
@@ -6,11 +8,12 @@
       <div class="col-md-10">
         <div class="row align-items-center">
           <div class="col-lg-7 mb-5 mb-lg-0">
-            <h2 class="mb-5" id="Event_Divisi"><%= nama_event %> - <%= klasifikasi_divisi %></h2>
+            <h2 class="mb-5" id="Event_Divisi"><%= event.nama_event %> - <%= divisi %></h2>
 
             <form
               class="border-right pr-5 mb-5"
               method="post"
+              action="/:eventId/join-event/:divisi" 
               id="JoinEvent"
               name="JoinEvent"
             >
@@ -21,7 +24,7 @@
                     class="form-control"
                     name="name"
                     id="name"
-                    value="<%= user.name %>"
+                    value="<%= user.nama_depan %> <%= user.nama_belakang %>"
                     readonly
                   />
                 </div>
@@ -39,7 +42,7 @@
 
               <div class="row">
                 <div class="col-md-12 form-group">
-                  <textarea
+                  <textarea required
                     class="form-control"
                     name="alasan_join"
                     id="AlasanJoin"
@@ -54,13 +57,12 @@
 
               <div class="row">
                 <div class="col-md-12 form-group">
-                  <label for="cv" id="file-label">CV</label>
-                  <input
-                    type="file"
+                  <input required
+                    type="text"
                     class="form-control"
                     name="cv"
                     id="cv"
-                    accept=".pdf, .doc, .docx"
+                    placeholder="Masukkan link CV atau Portofolio Anda"
                   />
                 </div>
               </div>
@@ -71,8 +73,9 @@
                     type="button"
                     value="Cancel"
                     class="btn btn-secondary rounded-0 py-2 px-4"
+                    onclick="goBack()"
                   />
-                </div>
+                </div>                             
                 <div class="col-md-2">
                   <input
                     type="submit"
@@ -83,20 +86,11 @@
                 </div>
               </div>
             </form>
-
             <div id="form-message-warning mt-4"></div>
-            <div id="form-message-success">
-              Your Request was sent, thank you!
-            </div>
           </div>
           <div class="col-lg-4 ml-auto">
             <h3 class="mb-4">Join Us</h3>
-            <p>
-              Kami sedang mencari individu yang bersemangat dan berbakat untuk
-              bergabung dengan kami dalam menyelenggarakan acara yang luar
-              biasa. Kepanitiaan adalah kesempatan luar biasa untuk berkembang,
-              berkontribusi, dan membangun kenangan bersama.
-            </p>
+            <p><%= event.deskripsi_event %></p>
           </div>
         </div>
       </div>
@@ -104,4 +98,6 @@
   </div>
 </div>
 
-<script src="./js/JoinEvent.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="/js/JoinEvent.js"></script>

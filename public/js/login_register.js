@@ -69,3 +69,58 @@ function addProdiOptions(options) {
         prodiSelect.appendChild(optionElement);
     });
 }
+$(document).ready(function () {
+    // $("#identitasForm").validate({
+    //   rules: {
+    //     email: {
+    //       required: true,
+    //       email: true
+    //     },
+    //     password: "required",
+    //     nim: "required",
+    //     phone: "required",
+    //     gender: "required",
+    //     nama_depan: "required",
+    //     nama_belakang: "required",
+    //     fakultas: "required",
+    //     program_studi: "required"
+    //   },
+    //   messages: {
+    //     email: {
+    //       required: "Please enter your email address",
+    //       email: "Please enter a valid email address"
+    //     },
+    //     password: "Please enter your password",
+    //     nim: "Please enter your student ID",
+    //     phone: "Please enter your phone number",
+    //     gender: "Please select your gender",
+    //     nama_depan: "Please enter your first name",
+    //     nama_belakang: "Please enter your last name",
+    //     fakultas: "Please select your faculty",
+    //     program_studi: "Please select your program"
+    //   },
+    //   submitHandler: function (form) {
+    //     form.submit();
+    //   }
+    // });
+
+    $("form[action='/login']").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true
+        },
+        password: "required"
+      },
+      messages: {
+        email: {
+          required: "Please enter your email address",
+          email: "Please enter a valid email address"
+        },
+        password: "Please enter your password"
+      },
+      submitHandler: function (form) {
+        form.submit();
+      }
+    });
+  });

@@ -122,8 +122,7 @@ app.post('/signup', notLoggedInMiddleware, async (req, res) => {
       },
     });
 
-    req.session.user = email;
-    res.redirect("/");
+    res.redirect("/login");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to create user' });
@@ -274,8 +273,22 @@ app.get("/profile-event/:eventId", async (req, res) => {
   }
 });
 
-app.get("/join-event", async (req, res) => {
+let currentEventId; 
+app.get("/:eventId/join-event/:divisi", async (req, res) => {
   try {
+    currentEventId = Number(req.params.eventId);  
+    const divisi = req.params.divisi;
+
+    const eventData = await prisma.event.findUnique({
+      where: {
+        id: currentEventId,
+      },
+      select: {
+        nama_event: true,
+        deskripsi_event: true,
+      },
+    });
+
     const userEmail = req.session.user;
 
     const user = await prisma.user.findUnique({
@@ -289,34 +302,63 @@ app.get("/join-event", async (req, res) => {
       },
     });
 
-    if (!user) {
-      // Handle the case where the user is not found
-      return res.status(404).send("User not found");
-    }
-
-    const eventData = {
-      nama_event: "ISLAH 2023",
-      klasifikasi_divisi: "ACARA",
-    };
-
-    const fullName = `${user.nama_depan} ${user.nama_belakang}`;
-
     res.render("Join_Event/index", {
       title: "Join Event",
       layout: "layouts/main-layout",
       phone_number: "+62 858 1564 8255",
-      nama_event: eventData.nama_event,
-      klasifikasi_divisi: eventData.klasifikasi_divisi,
-      user: {
-        name: fullName,
-        email: user.email,
-      },
+      eventId: currentEventId,
+      event: eventData,
+      divisi: divisi,
+      user: user,
     });
   } catch (error) {
     console.error("Error in /join-event route:", error);
     res.status(500).send("Internal Server Error");
   }
 });
+
+app.post("/:eventId/join-event/:divisi", async (req, res) => {
+  try {
+    const eventId = currentEventId;  
+    const divisi = req.params.divisi;
+    const { alasan_join, cv } = req.body;
+    const userEmail = req.session.user;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    });
+
+    const eventData = await prisma.event.findUnique({
+      where: {
+        id: eventId,
+      },
+      select: {
+        nama_event: true,
+        deskripsi_event: true,
+      },
+    });
+
+    const newUserRegistered = await prisma.user_registered.create({
+      data: {
+        user_nim: user.nim,
+        event_id: eventId,
+        alasan_join,
+        cv,
+      },
+    });
+
+    res.redirect(`/profile-event/${eventId}`);
+  } catch (error) {
+    console.error("Error in /join-event route:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+
+
 app.get("/buat-event", async (req, res) => {
   try{
     const userEmail = req.session.user;
