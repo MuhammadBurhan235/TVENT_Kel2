@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /*Preloadernya*/
   const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
+  // if (preloader) {
+  //   window.addEventListener('load', () => {
       preloader.remove();
-    });
-  }
+  //   });
+  // }
 
   /**Sticky Header buat Scroll*/
   const selectHeader = document.querySelector('#header');

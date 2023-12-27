@@ -81,7 +81,7 @@
   </div>
   <div class="container">
     <div class="row" id="cardRow">
-      <% events.forEach((event) => { %>
+      <% events.forEach((event, index) => { %>
       <div class="col-lg-4 col-md-4" style="margin-bottom: 20px">
         <div class="card">
           <img
@@ -106,7 +106,7 @@
               <%= event.deskripsi_event %>
             </p>
             <div class="entry-button">
-              <a id="bacaSelBtn" style="font-weight: bold" href="/profile-event"
+              <a id="bacaSelBtn" style="font-weight: bold" href="/profile-event/<%= event.id %>"
                 >Baca Selengkapnya</a
               >
             </div>

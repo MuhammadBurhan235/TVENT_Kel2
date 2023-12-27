@@ -230,15 +230,48 @@ app.get("/my-event", async (req, res) => {
   }
 });
 
-app.get("/profile-event", (req, res) => {
-  res.render("P_Event/index", {
-    title: "Provile Event",
-    layout: "layouts/main-layout",
-    phone_number: "+62 858 1564 8255",
-    // mengambil isi data dari event yang dipilih (berdasarkan id)
-    // ubah klasifikasi event dari string menjadi array
-    // kirim semua data yang sudah diambil ke frontend
-  });
+app.get("/profile-event/:eventId", async (req, res) => {
+  const eventId = Number(req.params.eventId);
+  try {
+    const userEmail = req.session.user;
+
+    const event = await prisma.event.findUnique({
+      where: {
+        id: eventId,
+      },
+      select: {
+        nama_event: true,
+        deskripsi_event: true,
+        poster_event: true,
+        klasifikasi_divisi: true
+      },
+    });
+
+    if (!event) {
+      // Handle the case where the user is not found
+      return res.status(404).send("User not found");
+    }
+    console.log(event)
+
+    res.render("P_Event/index", {
+      title: "Profile Event",
+      layout: "layouts/main-layout",
+      phone_number: "+62 858 1564 8255",
+      eventId,
+      event: event,
+      // nama_event: event.nama_event,
+      // eventId: eventId,
+      // deskripsi_event: event.deskripsi_event,
+      // klasifikasi_divisi: event.klasifikasi_divisi.split(", "),
+      // user: {
+      //   name: fullName,
+      //   email: user.email,
+      // },
+    });
+  } catch (error) {
+    console.error("Error in /join-event route:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/join-event", async (req, res) => {
