@@ -414,13 +414,34 @@ app.post("/buat-event", async (req,res)=>{
   }
 
 })
-app.get("/profile", (req, res) => {
+app.get("/profile", async (req, res) => {
+  const userEmail = req.session.user;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: userEmail,
+    },
+    select: {
+      nama_depan: true,
+      nama_belakang: true,
+      email: true,
+      phone: true,
+      gender: true,
+      nim: true,
+      fakultas: true,
+      program_studi: true,
+    },
+  });
   res.render("Profile/Profile.ejs", {
     title: "Profile",
     layout: "layouts/main-layout",
+    user: user,
+    userEmail: userEmail,
     phone_number: "+62 858 1564 8255",
   });
 });
+
+
 app.get("/sekretaris", (req, res) => {
   res.render("sekreDash/sekreDash.ejs", {
     title: "Sekretaris ",
@@ -428,6 +449,7 @@ app.get("/sekretaris", (req, res) => {
     phone_number: "+62 858 1564 8255",
   });
 });
+
 
 app.post("/logout", (req,res) => {
 
