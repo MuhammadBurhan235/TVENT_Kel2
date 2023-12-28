@@ -156,7 +156,17 @@ app.get("/gallery", (req, res) => {
 
 app.get("/list-event", async (req, res) => {
   try {
-    const events = await prisma.event.findMany();
+        const events = await prisma.event.findMany({
+      where: {
+        status: "DONE"
+      },
+      select: {
+        id: true,
+        nama_event: true,
+        deskripsi_event: true,
+        kepanitiaan_mulai: true,
+      },
+    });
     res.render("List_Event_Page/index", {
       title: "List Event",
       layout: "layouts/main-layout",
