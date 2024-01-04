@@ -12,10 +12,19 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-12 mb-3">
-                  <img src="<%= userEvent.event.poster_event %>" alt="<%= userEvent.event.nama_event %> Image" class="event-image">
+                  <% if (userEvent.event && userEvent.event.nama_event) { %>
+                    <img src="<%= userEvent.event.poster_event %>" alt="<%= userEvent.event.nama_event %> Image" class="event-image">
+                  <% } else { %>
+                    <!-- Tambahkan kondisi untuk menghilangkan fallback data -->
+                    <img src="" alt="" class="event-image" style="display: none;">
+                  <% } %>
                 </div>
                 <div class="col-md-12">
-                  <h5 class="card-title"><%= userEvent.event.nama_event %></h5>
+                  <% if (userEvent.event && userEvent.event.nama_event) { %>
+                    <h5 class="card-title"><%= userEvent.event.nama_event %></h5>
+                  <% } else { %>
+                    <h5 class="card-title">Event Title Not Available</h5>
+                  <% } %>
                   <p class="card-text">Divisi: <%= userEvent.divisi %></p>
                   <% if (userEvent.jabatan === 'Ketua Pelaksana') { %>
                     <p class="card-text">Jabatan: Ketua Pelaksana</p>
@@ -36,6 +45,11 @@
           </div>
         </div>
       <% }); %>
+      
+      <% if (userEvents.length === 0) { %>
+        <p>No events available.</p>
+      <% } %>
+      
     </div>
   </div>
   <div id="pagination" class="pagination">
