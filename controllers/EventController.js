@@ -5,6 +5,14 @@ const prisma = new PrismaClient();
 const createEvent = async (req, res) => {
   try {
     const userEmail = req.session.user;
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        nim: true,
+      },
+    });
 
     console.log(req.session.user) / console.log(req.body);
     const eventData = {
@@ -23,8 +31,18 @@ const createEvent = async (req, res) => {
     console.log(eventData);
 
     const newEvent = await prisma.event.create({
-      data: eventData,
+      data: {
+        ...eventData,
+        user_registered: {
+          create: {
+            user_nim: user.nim,
+            divisi: "Inti",
+            jabatan: "Ketua Pelaksana",
+          },
+        },
+      },
     });
+
     console.log("data baru berhasil diinput");
     res.redirect("/");
   } catch (error) {

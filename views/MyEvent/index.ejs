@@ -14,16 +14,18 @@
                 <div class="col-md-12 mb-3">
                   <img src="<%= userEvent.event.poster_event %>" alt="<%= userEvent.event.nama_event %> Image" class="event-image">
                 </div>
-                <div class="col-md-12"> 
+                <div class="col-md-12">
                   <h5 class="card-title"><%= userEvent.event.nama_event %></h5>
-                  <p class="card-text">
-                    Divisi: <%= userEvent.divisi %>
-                  </p>
-                  <% if (userEvent.status === 'ACCEPTED') { %>
+                  <p class="card-text">Divisi: <%= userEvent.divisi %></p>
+                  <% if (userEvent.jabatan === 'Ketua Pelaksana') { %>
+                    <p class="card-text">Jabatan: Ketua Pelaksana</p>
+                  <% } else if (userEvent.status === 'ACCEPTED' && userEvent.jabatan) { %>
                     <p class="card-text">Jabatan: <%= userEvent.jabatan %></p>
-                  <% } %>
-                  <% if (userEvent.jabatan === 'Kepala Divisi' || userEvent.jabatan === 'Sekretaris Divisi') { %>
-                    <a href="/sekretaris">Dash</a>
+                  <% } else { %>
+                    <p class="card-text">Jabatan: -</p>
+                  <% } %>                                        
+                  <% if (userEvent.jabatan === 'Kepala Divisi' || userEvent.jabatan === 'Sekretaris Divisi'|| userEvent.jabatan === 'Ketua Pelaksana') { %>
+                    <a href="/sekretaris">Dashboard</a>
                   <% } %>                  
                 </div>
               </div>
@@ -38,7 +40,7 @@
   </div>
   <div id="pagination" class="pagination">
     <% if (currentPage > 1) { %>
-      <button class="page-button" onclick="changePage(<%= currentPage - 1 %>)">Previous</button>
+      <button class="page-button" onclick="changePage(<%= currentPage - 1 %>)" <%= currentPage === 1 ? 'disabled' : '' %>>Previous</button>
     <% } %>
   
     <% for (let i = 1; i <= totalPages; i++) { %>
