@@ -1,5 +1,6 @@
 .event-card {
   margin-bottom: 20px;
+  height: 380px;
 }
 
 .event-image {
@@ -7,11 +8,13 @@
   height: 150px;
   max-height: 150px; 
 }
+
 /*Pagination*/
 .pagination {
 	display: flex;
 	justify-content: center;
 	margin-top: 20px;
+  margin-bottom: 50px;
   }
 
   .pagination button {

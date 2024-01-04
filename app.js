@@ -182,54 +182,42 @@ app.get("/list-event", async (req, res) => {
 
 app.get("/my-event", async (req, res) => {
   try {
-    const dummyEvents = [
-      {
-        id: 1,
-        nama_event: "Islah 2023",
-        klasifikasi_divisi: "Divisi Acara",
-        imagePath: "/img/tu1.jpg",
+    const userEmail = req.session.user;
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
       },
-      {
-        id: 2,
-        nama_event: "Ecafest",
-        klasifikasi_divisi: "Divisi Humas",
-        imagePath: "/img/event.jpeg",
+      select: {
+        nim: true,
       },
-      {
-        id: 3,
-        nama_event: "Abogoboga",
-        klasifikasi_divisi: "Divisi Keamanan",
-        imagePath: "/img/tu3.jpg",
+    });
+    const userEvents = await prisma.user_registered.findMany({
+      where: {
+        user_nim: user.nim,
       },
-      {
-        id: 4,
-        nama_event: "Asidiai",
-        klasifikasi_divisi: "Divisi HSE",
-        imagePath: "/img/tu3.jpg",
+      include: {
+        event: {
+          select: {
+            id: true,
+            nama_event: true,
+            klasifikasi_divisi: true,
+            poster_event: true,
+          },
+        },
       },
-      {
-        id: 5,
-        nama_event: "Ululu",
-        klasifikasi_divisi: "Divisi Acaca",
-        imagePath: "/img/download.jpeg",
-      },
-    ];
+    });
+
     const EVENTS_PER_PAGE = 3;
-
-    // Get the current page from the query parameters
     const currentPage = parseInt(req.query.page) || 1;
-
-    // Calculate the total number of pages
-    const totalPages = Math.ceil(dummyEvents.length / EVENTS_PER_PAGE);
-
-    // Slice the events array based on the current page
-    const eventsToShow = dummyEvents.slice((currentPage - 1) * EVENTS_PER_PAGE, currentPage * EVENTS_PER_PAGE);
+    const totalEvents = userEvents.length;
+    const totalPages = Math.ceil(totalEvents / EVENTS_PER_PAGE);
+    const eventsToShow = userEvents.slice((currentPage - 1) * EVENTS_PER_PAGE, currentPage * EVENTS_PER_PAGE);
 
     res.render("MyEvent/index", {
       title: "My Event",
       layout: "layouts/main-layout",
       phone_number: "+62 858 1564 8255",
-      events: eventsToShow,
+      userEvents: userEvents,
       currentPage: currentPage,
       totalPages: totalPages,
       EVENTS_PER_PAGE: EVENTS_PER_PAGE,
@@ -471,9 +459,6 @@ app.get("/sekretaris", async (req, res) => {
     res.status(500).send("Internal Server Error"); // Handle the error gracefully
   }
 });
-
-
-
 
 
 app.post("/logout", (req,res) => {
