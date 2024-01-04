@@ -143,9 +143,11 @@
                 <div class="x_panel">
                   <div class="x_content">
                       <div class="row">
+                        
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
                     <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                      
                       <thead class="text-capitalize">
                         <tr>
                             <th>Nama</th>
@@ -154,11 +156,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                      <% sekreDash.forEach(sekreDash => { %>
                         <tr>
-                            <td>Chandra Rizki Nuryan</td>
+                            <td><%= user.find(u=>u.nim == sekreDash.user_nim).nama_depan +" "+ user.find(u=>u.nim == sekreDash.user_nim).nama_belakang %> </td>
                             <td>Divisi Acara</td>
                             <td>
-                                <button class="btn btn-secondary">Lihat CV</buttton></td>
+                              <a class="btn btn-secondary" href="https://<%= sekreDash.cv %>" target="_blank">Lihat CV</a>
+                            </td>
                             <td>
                             <td>
                                 <button class="btn btn-secondary">Lihat Alasan</buttton></td>
@@ -173,103 +177,36 @@
                                         <button class="btn btn-primary">Terima</button>
                                     </div>
                                     <button class="btn btn-secondary">Tolak</button>
-                                </div>                    
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sule Andre Setiawan</td>
-                            <td>Divisi Humas</td>
-                            <td>
-                                <button class="btn btn-secondary">Lihat CV</buttton></td>
-                            <td>
-                            <td>
-                                <button class="btn btn-secondary">Lihat Alasan</buttton></td>
-                            <td>
-                                <div class="dropdown">
-                                    <div class="d-flex">
-                                        <select class="form-control">
-                                            <option value="Kepala Divisi">Kepala Divisi</option>
-                                            <option value="Sekretaris Divisi">Sekretaris Divisi</option>
-                                            <option value="Anggota Divisi">Anggota Divisi</option>
-                                        </select>
-                                        <button class="btn btn btn-primary">Terima</button>
-                                    </div>
-                                    <button class="btn btn btn-secondary">Tolak</button>
-                                </div>                    
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tio Prakasa Juar</td>
-                            <td>Divisi Konsumsi</td>
-                            <td>
-                                <button class="btn btn-secondary">Lihat CV</buttton></td>
-                            <td>
-                            <td>
-                                <button class="btn btn-secondary">Lihat Alasan</buttton></td>
-                            <td>
-                                <div class="dropdown">
-                                    <div class="d-flex">
-                                        <select class="form-control">
-                                            <option value="Kepala Divisi">Kepala Divisi</option>
-                                            <option value="Sekretaris Divisi">Sekretaris Divisi</option>
-                                            <option value="Anggota Divisi">Anggota Divisi</option>
-                                        </select>
-                                        <button class="btn btn-primary">Terima</button>
-                                    </div>
-                                    <button class="btn btn-secondary">Tolak</button>
-                                </div>                    
-                            </td>
-                        </tr>
-                        <tr>
-                          <td>Chandra Rizki</td>
-                          <td>Divisi Acara</td>
-                          <td>
-                              <button class="btn btn-secondary">Lihat CV</buttton></td>
-                          <td>
-                          <td>
-                              <button class="btn btn-secondary">Lihat Alasan</buttton></td>
-                          <td>
-                              <div class="dropdown">
-                                  <div class="d-flex">
-                                      <select class="form-control">
-                                          <option value="Kepala Divisi">Kepala Divisi</option>
-                                          <option value="Sekretaris Divisi">Sekretaris Divisi</option>
-                                          <option value="Anggota Divisi">Anggota Divisi</option>
-                                      </select>
-                                      <button class="btn btn-primary">Terima</button>
-                                  </div>
-                                  <button class="btn btn-secondary">Tolak</button>
-                              </div>                    
-                          </td>
-                      </tr>
-                      <tr>
-                        <td>Chandra Rizki</td>
-                        <td>Divisi Acara</td>
-                        <td>
-                            <button class="btn btn-secondary">Lihat CV</buttton></td>
-                        <td>
-                        <td>
-                            <button class="btn btn-secondary">Lihat Alasan</buttton></td>
-                        <td>
-                            <div class="dropdown">
-                                <div class="d-flex">
-                                    <select class="form-control">
-                                        <option value="Kepala Divisi">Kepala Divisi</option>
-                                        <option value="Sekretaris Divisi">Sekretaris Divisi</option>
-                                        <option value="Anggota Divisi">Anggota Divisi</option>
-                                    </select>
-                                    <button class="btn btn-primary">Terima</button>
                                 </div>
-                                <button class="btn btn-secondary">Tolak</button>
-                            </div>                    
-                        </td>
-                    </tr>
-                    </tbody>
+                                                 
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody> 
                     </table>
                   </div>
                 </div>
               </div>
             </div>
+            
+                </div>
+              </div>
+              <div class="modal fade" id="lihatCv<%= sekreDash %>" tabindex="-1" role="dialog" aria-labelledby="lihatCvLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="lihatCvLabel">Lihat CV</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <%= sekreDash.cv %>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+                    </div>
+                  </div>
                 </div>
               </div>
 					
