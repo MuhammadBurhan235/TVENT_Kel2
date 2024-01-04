@@ -389,41 +389,40 @@ app.get("/buat-event", async (req, res) => {
   });
 
   
-app.post("/buat-event", async (req,res)=>{
-  try{
-    const userEmail = req.session.user;
+// app.post("/buat-event", async (req,res)=>{
+//   try{
+//     const userEmail = req.session.user;
 
-  console.log(req.session.user)/
-    console.log(req.body)
-    const eventData = {
-      email_event: req.session.user,
-      nama_event: req.body.nama_event,
-      deskripsi_event: req.body.deskripsi_event,
-      penyelenggara_event: req.body.penyelenggara_event,
-      klasifikasi_divisi: req.body.divisi.join(', '),
-      benefit_event: req.body.benefit_event,
-      poster_event: req.body.poster_event,
-      kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
-      kepanitiaan_selesai: new Date(req.body.kepanitiaan_selesai),
-      event_mulai: new Date(req.body.event_mulai),
-      event_selesai: new Date(req.body.event_selesai),
-    }
-    console.log(eventData)
-    // console.log(data);
-    const newEvent = await prisma.event.create({
-      data: eventData
-     })
-    console.log("data baru berasil diinput")
-    res.redirect("/")
+//   console.log(req.session.user)/
+//     console.log(req.body)
+//     const eventData = {
+//       email_event: req.session.user,
+//       nama_event: req.body.nama_event,
+//       deskripsi_event: req.body.deskripsi_event,
+//       penyelenggara_event: req.body.penyelenggara_event,
+//       klasifikasi_divisi: req.body.divisi.join(', '),
+//       benefit_event: req.body.benefit_event,
+//       poster_event: req.body.poster_event,
+//       kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
+//       kepanitiaan_selesai: new Date(req.body.kepanitiaan_selesai),
+//       event_mulai: new Date(req.body.event_mulai),
+//       event_selesai: new Date(req.body.event_selesai),
+//     }
+//     console.log(eventData)
+//     // console.log(data);
+//     const newEvent = await prisma.event.create({
+//       data: eventData
+//      })
+//     console.log("data baru berasil diinput")
+//     res.redirect("/")
 
-  }
-  catch(error){
-    console.error("ada masalah, Error: " +  error)
-  
-  
-  }
+//   }
+//   catch(error){
+//     console.error("ada masalah, Error: " +  error)
 
-})
+//   }
+
+// })
 app.get("/profile", async (req, res) => {
   const userEmail = req.session.user;
 
