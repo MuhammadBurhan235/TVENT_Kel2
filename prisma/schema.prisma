@@ -61,6 +61,9 @@ model user_registered {
   created_at  DateTime @default(now()) @db.Timestamp(0)
   user        user?    @relation(fields: [user_nim], references: [nim], onDelete: Cascade, onUpdate: Restrict, map: "user_registered_ibfk_1")
   event       event?   @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "user_registered_ibfk_2")
+  divisi      String?  @db.VarChar(255)
+  status      usreg_status?
+  jabatan     String?  @db.VarChar(255)
 
   @@index([event_id], map: "event_id")
   @@index([user_nim], map: "user_nim")
@@ -88,8 +91,12 @@ enum user_gender {
 }
 
 enum event_status {
-  ON_REVIEW @map("ON REVIEW")
-  ON_GOING  @map("ON GOING")
+  PENDING @map("PENDING")
   REJECTED
-  DONE
+  ACCEPTED
+}
+
+enum usreg_status{
+  REJECTED 
+  ACCEPTED
 }

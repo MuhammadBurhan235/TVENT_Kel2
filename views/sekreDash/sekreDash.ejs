@@ -151,36 +151,42 @@
                       <thead class="text-capitalize">
                         <tr>
                             <th>Nama</th>
-                            <th colspan="4">Atribut Calon Panitia</th>
-                            <th>Verifikasi</th>
+                            <th>Divisi</th>
+                            <th>CV</th>
+                            <th>Alasan Join</th>
+                            <th colspan="2">Verifikasi</th>
                         </tr>
                     </thead>
                     <tbody>
                       <% sekreDash.forEach(sekreDash => { %>
                         <tr>
                             <td><%= user.find(u=>u.nim == sekreDash.user_nim).nama_depan +" "+ user.find(u=>u.nim == sekreDash.user_nim).nama_belakang %> </td>
-                            <td>Divisi Acara</td>
+                            <td> <%= sekreDash.divisi %> </td>
                             <td>
-                              <a class="btn btn-secondary" href="https://<%= sekreDash.cv %>" target="_blank">Lihat CV</a>
+                              <a class="btn btn-secondary" href="<%= sekreDash.cv %>" target="_blank">Lihat CV</a>
                             </td>
                             <td>
+                              <%= sekreDash.alasan_join %>
+                            
                             <td>
-                                <button class="btn btn-secondary">Lihat Alasan</buttton></td>
-                            <td>
-                                <div class="dropdown">
+                              <form action="/verifikasi/<%= sekreDash.id %>" method="post">
+                                
                                     <div class="d-flex">
-                                        <select class="form-control">
+                                        <select class="form-control" name="jabatan" placeholder="jabatan" required>
+                                            <option value="" disabled selected>Select Jabatan</option>
                                             <option value="Kepala Divisi">Kepala Divisi</option>
                                             <option value="Sekretaris Divisi">Sekretaris Divisi</option>
                                             <option value="Anggota Divisi">Anggota Divisi</option>
                                         </select>
-                                        <button class="btn btn-primary">Terima</button>
-                                    </div>
-                                    <button class="btn btn-secondary">Tolak</button>
-                                </div>
-                                                 
+                                        
+                                    </div>  
+                                
+                                <button name="status" value="ACCEPTED" class="btn btn-success ml-auto">ACCEPTED</button>
+                                <button name="status" value="REJECTED" class="btn btn-danger">REJECTED</button>
+                              </form>             
                             </td>
                         </tr>
+                        
                         <% }); %>
                     </tbody> 
                     </table>
@@ -188,28 +194,6 @@
                 </div>
               </div>
             </div>
-            
-                </div>
-              </div>
-              <div class="modal fade" id="lihatCv<%= sekreDash %>" tabindex="-1" role="dialog" aria-labelledby="lihatCvLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="lihatCvLabel">Lihat CV</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <%= sekreDash.cv %>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-					
                   </div>
                 </div>
               </div>

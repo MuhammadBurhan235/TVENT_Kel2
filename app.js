@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const session = require("express-session");
 const dotenv = require("dotenv")
 const bcrypt = require('bcrypt');
+const EventRoute = require("./routes/EventRoute");
 
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -12,12 +13,12 @@ const userAuthMiddleware = require("./middleware/userAuthMiddleware")
 
 dotenv.config()
 
+
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 const port = 3253;
 const expressLayouts = require("express-ejs-layouts");
-
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
@@ -33,7 +34,7 @@ const notLoggedInMiddleware = (req, res, next) => {
     next();
   }
 };
-
+app.use(EventRoute);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -158,7 +159,7 @@ app.get("/list-event", async (req, res) => {
   try {
         const events = await prisma.event.findMany({
       where: {
-        status: "DONE"
+        status: "ACCEPTED"
       },
       select: {
         id: true,
@@ -284,6 +285,7 @@ app.get("/profile-event/:eventId", async (req, res) => {
 });
 
 let currentEventId; 
+let divisi;
 app.get("/:eventId/join-event/:divisi", async (req, res) => {
   try {
     currentEventId = Number(req.params.eventId);  
@@ -327,11 +329,11 @@ app.get("/:eventId/join-event/:divisi", async (req, res) => {
   }
 });
 
+
 app.post("/:eventId/join-event/:divisi", async (req, res) => {
   try {
     const eventId = currentEventId;  
-    const divisi = req.params.divisi;
-    const { alasan_join, cv } = req.body;
+    const { alasan_join, cv, divisi } = req.body;
     const userEmail = req.session.user;
 
     const user = await prisma.user.findUnique({
@@ -350,12 +352,14 @@ app.post("/:eventId/join-event/:divisi", async (req, res) => {
       },
     });
 
+    console.log(divisi)
     const newUserRegistered = await prisma.user_registered.create({
       data: {
         user_nim: user.nim,
         event_id: eventId,
         alasan_join,
         cv,
+        divisi : divisi,
       },
     });
 
@@ -386,43 +390,41 @@ app.get("/buat-event", async (req, res) => {
       layout: "layouts/main-layout",
       phone_number: "+62 858 1564 8255",
     });
-  });
+});
 
   
 // app.post("/buat-event", async (req,res)=>{
 //   try{
-//     const userEmail = req.session.user;
+//   const userEmail = req.session.user;
 
-//   console.log(req.session.user)/
-//     console.log(req.body)
-//     const eventData = {
-//       email_event: req.session.user,
-//       nama_event: req.body.nama_event,
-//       deskripsi_event: req.body.deskripsi_event,
-//       penyelenggara_event: req.body.penyelenggara_event,
-//       klasifikasi_divisi: req.body.divisi.join(', '),
-//       benefit_event: req.body.benefit_event,
-//       poster_event: req.body.poster_event,
-//       kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
-//       kepanitiaan_selesai: new Date(req.body.kepanitiaan_selesai),
-//       event_mulai: new Date(req.body.event_mulai),
-//       event_selesai: new Date(req.body.event_selesai),
-//     }
-//     console.log(eventData)
-//     // console.log(data);
-//     const newEvent = await prisma.event.create({
-//       data: eventData
-//      })
-//     console.log("data baru berasil diinput")
-//     res.redirect("/")
-
+//  console.log(req.session.user)/
+//  console.log(req.body)
+//  const eventData = {
+//  email_event: req.session.user,
+//  nama_event: req.body.nama_event,
+//  deskripsi_event: req.body.deskripsi_event,
+//  penyelenggara_event: req.body.penyelenggara_event,
+//  klasifikasi_divisi: req.body.divisi.join(', '),
+//  benefit_event: req.body.benefit_event,
+//  poster_event: req.body.poster_event,
+//  kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
+//  kepanitiaan_selesai: new Date(req.body.kepanitiaan_selesai),
+//  event_mulai: new Date(req.body.event_mulai),
+//  event_selesai: new Date(req.body.event_selesai),
+//   }
+//      console.log(eventData)
+//      // console.log(data);
+//      const newEvent = await prisma.event.create({
+//        data: eventData
+//       })
+//      console.log("data baru berasil diinput")
+//      res.redirect("/")
 //   }
 //   catch(error){
 //     console.error("ada masalah, Error: " +  error)
-
 //   }
+// });
 
-// })
 app.get("/profile", async (req, res) => {
   const userEmail = req.session.user;
 
@@ -471,6 +473,9 @@ app.get("/sekretaris", async (req, res) => {
 });
 
 
+
+
+
 app.post("/logout", (req,res) => {
 
   req.session.destroy((err) => {
@@ -507,6 +512,26 @@ app.post("/verif/:eventId", async (req, res) => {
     });
 
     res.status(401).redirect("/admin");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/verifikasi/:userregisID", async (req, res) => {
+  const userregisID = parseInt(req.params.userregisID);
+  const newStatus = req.body.status;
+  const newjabatan = req.body.jabatan
+  try {
+    const updateduserregister = await prisma.user_registered.update({
+      where: { id: userregisID },
+      data: {
+        status: newStatus,
+        jabatan: newjabatan,
+      },
+    });
+    console.log(updateduserregister);
+    res.status(401).redirect("/sekretaris");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

@@ -8,7 +8,17 @@ const createEvent = async (req, res) => {
 
     console.log(req.session.user) / console.log(req.body);
     const eventData = {
-      // ... (rest of the code)
+      email_event: req.session.user,
+      nama_event: req.body.nama_event,
+      deskripsi_event: req.body.deskripsi_event,
+      penyelenggara_event: req.body.penyelenggara_event,
+      klasifikasi_divisi: req.body.divisi.join(', '),
+      benefit_event: req.body.benefit_event,
+      poster_event: req.body.poster_event,
+      kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
+      kepanitiaan_selesai: new Date(req.body.kepanitiaan_selesai),
+      event_mulai: new Date(req.body.event_mulai),
+      event_selesai: new Date(req.body.event_selesai),
     };
     console.log(eventData);
 
@@ -26,7 +36,7 @@ const listEvents = async (req, res) => {
   try {
     const events = await prisma.event.findMany({
       where: {
-        status: "DONE",
+        status: "ACCEPTED",
       },
       select: {
         id: true,

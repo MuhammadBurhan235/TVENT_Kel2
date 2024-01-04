@@ -24,10 +24,9 @@
                     <%= event.nama_event %>
                     <div>
                       <form action="/verif/<%= event.id %>" method="post">
-                        <button name="status" value="ON_REVIEW" class="btn btn-secondary">ON REVIEW</button>
-                        <button name="status" value="ON_GOING" class="btn btn-secondary">ON GOING</button>
+                        <button name="status" value="PENDING" class="btn btn-secondary">PENDING</button>
                         <button name="status" value="REJECTED" class="btn btn-danger">REJECTED</button>
-                        <button name="status" value="DONE" class="btn btn-success ml-auto">DONE</button>
+                        <button name="status" value="ACCEPTED" class="btn btn-success ml-auto">ACCEPTED</button>
                       </form>
                     </div>
                   </div>
