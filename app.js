@@ -34,7 +34,6 @@ const notLoggedInMiddleware = (req, res, next) => {
     next();
   }
 };
-app.use(EventRoute);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -42,6 +41,7 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 
 app.use(express.static("public"));
+app.use(EventRoute);
 
 
 
