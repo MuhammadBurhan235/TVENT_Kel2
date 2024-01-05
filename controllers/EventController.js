@@ -71,10 +71,28 @@ const listEvents = async (req, res) => {
     throw error;
   }
 };
-
+const getBuatEvent = async (req, res) => {
+  try{
+    const userEmail = req.session.user;
+    
+  }
+  catch(error){
+    console.error("ada masalah, Error: " +  error)
+  
+  
+  }
+  
+  
+    res.render("Buat_Event/index", {
+      title: "Buat Event",
+      layout: "layouts/main-layout",
+      phone_number: "+62 858 1564 8255",
+    });
+});
 module.exports = {
   createEvent,
   listEvents,
+  getBuatEvent,
 };
 // const getEvents = async (req, res) => {
 //   try {

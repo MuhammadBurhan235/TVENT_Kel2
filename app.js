@@ -34,7 +34,6 @@ const notLoggedInMiddleware = (req, res, next) => {
     next();
   }
 };
-app.use(EventRoute);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -42,6 +41,7 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 
 app.use(express.static("public"));
+app.use(EventRoute);
 
 
 
@@ -402,24 +402,24 @@ app.get("/my-event", async (req, res) => {
 
 
 
-app.get("/buat-event", async (req, res) => {
-  try{
-    const userEmail = req.session.user;
+// app.get("/buat-event", async (req, res) => {
+//   try{
+//     const userEmail = req.session.user;
     
-  }
-  catch(error){
-    console.error("ada masalah, Error: " +  error)
+//   }
+//   catch(error){
+//     console.error("ada masalah, Error: " +  error)
   
   
-  }
+//   }
   
   
-    res.render("Buat_Event/index", {
-      title: "Buat Event",
-      layout: "layouts/main-layout",
-      phone_number: "+62 858 1564 8255",
-    });
-});
+//     res.render("Buat_Event/index", {
+//       title: "Buat Event",
+//       layout: "layouts/main-layout",
+//       phone_number: "+62 858 1564 8255",
+//     });
+// });
 
   
 // app.post("/buat-event", async (req,res)=>{

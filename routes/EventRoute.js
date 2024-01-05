@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.post("/buat-event", createEvent);
 
-// router.get("/list-event", listEvents);
+router.get("/list-event", listEvents);
+router.get("/buat-event", getBuatEvent);
+
 
 module.exports = router;
