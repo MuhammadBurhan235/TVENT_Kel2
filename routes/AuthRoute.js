@@ -1,5 +1,7 @@
 const express = require("express");
 const {
+  logOut,
+
   logIn,
   getLogIn,
   signUp,
@@ -8,6 +10,8 @@ const {
 } = require("../controllers/AuthController.js");
 
 const router = express.Router();
+
+router.post("/logout", logOut);
 
 router.post("/login", logIn);
 router.get("/login", getLogIn);

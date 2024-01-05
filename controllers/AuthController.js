@@ -92,7 +92,16 @@ const signUp = async (req, res) => {
   }
 };
 
+const logOut = async (req, res) => {
+  res.render("Login_Register/login_register", {
+    title: "Login",
+    layout: "layouts/bs-layout",
+  });
+};
+
 module.exports = {
+  logOut,
+
   logIn,
   signUp,
   getLogIn,
