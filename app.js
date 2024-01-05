@@ -67,11 +67,11 @@ app.use("/login", (req, res, next) => {
 //   const { email, password } = req.body;
 //   console.log(email, password);
 //   try {
-//     const user = await prisma.user.findUnique({
-//       where: {
-//         email: email,
-//       },
-//     });
+    // const user = await prisma.user.findUnique({
+    //   where: {
+    //     email: email,
+    //   },
+    // });
 //     console.log(user);
 
 //     if (!user) {
@@ -216,14 +216,7 @@ app.get("/profile-event/:eventId", async (req, res) => {
       phone_number: "+62 858 1564 8255",
       eventId,
       event: event,
-      // nama_event: event.nama_event,
-      // eventId: eventId,
-      // deskripsi_event: event.deskripsi_event,
-      // klasifikasi_divisi: event.klasifikasi_divisi.split(", "),
-      // user: {
-      //   name: fullName,
-      //   email: user.email,
-      // },
+   
     });
   } catch (error) {
     console.error("Error in /join-event route:", error);

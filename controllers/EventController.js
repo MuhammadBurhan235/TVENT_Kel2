@@ -87,6 +87,9 @@ const getBuatEvent = async (req, res) => {
     phone_number: "+62 858 1564 8255",
   });
 };
+
+
+
 module.exports = {
   createEvent,
   listEvents,
