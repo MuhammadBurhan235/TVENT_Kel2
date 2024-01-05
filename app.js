@@ -5,6 +5,7 @@ const session = require("express-session");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const EventRoute = require("./routes/EventRoute");
+const UserRoute = require("./routes/UserRoute");
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -43,6 +44,7 @@ app.use(expressLayouts);
 
 app.use(express.static("public"));
 app.use(EventRoute);
+app.use(UserRoute);
 
 app.use("/login", (req, res, next) => {
   if (req.session && req.session.user) {
@@ -479,24 +481,24 @@ app.get("/profile", async (req, res) => {
   });
 });
 
-app.get("/sekretaris", async (req, res) => {
-  try {
-    const sekreDash = await prisma.user_registered.findMany();
-    const user = await prisma.user.findMany();
-    console.log(sekreDash);
-    console.log(user);
-    res.render("sekreDash/sekreDash.ejs", {
-      title: "Sekretaris",
-      layout: "layouts/bs-layout",
-      phone_number: "+62 858 1564 8255",
-      sekreDash: sekreDash,
-      user: user,
-    });
-  } catch (error) {
-    console.error("Error fetching events:", error.message);
-    res.status(500).send("Internal Server Error"); // Handle the error gracefully
-  }
-});
+// app.get("/sekretaris", async (req, res) => {
+//   try {
+//     const sekreDash = await prisma.user_registered.findMany();
+//     const user = await prisma.user.findMany();
+//     console.log(sekreDash);
+//     console.log(user);
+//     res.render("sekreDash/sekreDash.ejs", {
+//       title: "Sekretaris",
+//       layout: "layouts/bs-layout",
+//       phone_number: "+62 858 1564 8255",
+//       sekreDash: sekreDash,
+//       user: user,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching events:", error.message);
+//     res.status(500).send("Internal Server Error"); // Handle the error gracefully
+//   }
+// });
 
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {

@@ -1,68 +1,24 @@
-const User = require("../models/UserModel.js");
-
-const getUsers = async (req, res) => {
+// const Event = require("../models/EventModel.js");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+const showSekre = async (req, res) => {
   try {
-    const response = await User.findAll();
-    res.status(200).json(response);
-  } catch {
-    console.log(error.message);
-  }
-};
-
-module.exports = getUsers;
-
-const getUserById = async (req, res) => {
-  try {
-    const response = await User.findOne({
-      where: {
-        id: req.params.id,
-      },
+    const sekreDash = await prisma.user_registered.findMany();
+    const user = await prisma.user.findMany();
+    console.log(sekreDash);
+    console.log(user);
+    res.render("sekreDash/sekreDash.ejs", {
+      title: "Sekretaris",
+      layout: "layouts/bs-layout",
+      phone_number: "+62 858 1564 8255",
+      sekreDash: sekreDash,
+      user: user,
     });
-    res.status(200).json(response);
-  } catch {
-    console.log(error.message);
+  } catch (error) {
+    console.error("Error fetching events:", error.message);
+    res.status(500).send("Internal Server Error"); // Handle the error gracefully
   }
 };
-
-module.exports = getUserById;
-
-const createUser = async (req, res) => {
-  try {
-    await User.create(req.body);
-    res.status(201).json({ msg: "User Created" });
-  } catch {
-    console.log(error.message);
-  }
+module.exports = {
+  showSekre,
 };
-
-module.exports = createUser;
-
-const updateUser = async (req, res) => {
-  try {
-    await User.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.status(200).json({ msg: "User Updated" });
-  } catch {
-    console.log(error.message);
-  }
-};
-
-module.exports = updateUser;
-
-const deleteUser = async (req, res) => {
-  try {
-    await User.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.status(200).json({ msg: "User Deleted" });
-  } catch {
-    console.log(error.message);
-  }
-};
-
-module.exports = deleteUser;
