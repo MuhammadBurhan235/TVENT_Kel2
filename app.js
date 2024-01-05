@@ -38,9 +38,9 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 
 app.use(express.static("public"));
-app.use(EventRoute);
 app.use(UserRoute);
 app.use(AuthRoute);
+app.use(EventRoute);
 
 app.use("/login", (req, res, next) => {
   if (req.session && req.session.user) {
@@ -132,13 +132,13 @@ app.use("/login", (req, res, next) => {
 //   }
 // });
 
-// app.use("/", (req, res, next) => {
-//   if (req.session && req.session.user) {
-//     next();
-//   } else {
-//     res.redirect("/login");
-//   }
-// });
+app.use("/", (req, res, next) => {
+  if (req.session && req.session.user) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+});
 
 // app.get("/", (req, res) => {
 //   res.render("Main_Page/index", {

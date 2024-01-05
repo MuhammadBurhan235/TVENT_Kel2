@@ -36,10 +36,6 @@ const verifEvent = async (req, res) => {
   }
 };
 
-app.get("/admin", async (req, res) => {});
-
-app.post("/verif/:eventId", async (req, res) => {});
-
 module.exports = {
   verifEvent,
 
