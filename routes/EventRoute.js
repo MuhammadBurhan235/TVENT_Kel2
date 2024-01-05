@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   createEvent,
+  getBuatEvent,
   listEvents,
 } = require("../controllers/EventController.js");
 
@@ -10,6 +11,5 @@ router.post("/buat-event", createEvent);
 
 router.get("/list-event", listEvents);
 router.get("/buat-event", getBuatEvent);
-
 
 module.exports = router;

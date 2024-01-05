@@ -20,7 +20,7 @@ const createEvent = async (req, res) => {
       nama_event: req.body.nama_event,
       deskripsi_event: req.body.deskripsi_event,
       penyelenggara_event: req.body.penyelenggara_event,
-      klasifikasi_divisi: req.body.divisi.join(', '),
+      klasifikasi_divisi: req.body.divisi.join(", "),
       benefit_event: req.body.benefit_event,
       poster_event: req.body.poster_event,
       kepanitiaan_mulai: new Date(req.body.kepanitiaan_mulai),
@@ -64,6 +64,9 @@ const listEvents = async (req, res) => {
       },
     });
     res.render("List_Event_Page/index", {
+      title: "List Event",
+      layout: "layouts/main-layout",
+      phone_number: "+62 858 1564 8255",
       events: events,
     });
   } catch (error) {
@@ -72,23 +75,18 @@ const listEvents = async (req, res) => {
   }
 };
 const getBuatEvent = async (req, res) => {
-  try{
+  try {
     const userEmail = req.session.user;
-    
+  } catch (error) {
+    console.error("ada masalah, Error: " + error);
   }
-  catch(error){
-    console.error("ada masalah, Error: " +  error)
-  
-  
-  }
-  
-  
-    res.render("Buat_Event/index", {
-      title: "Buat Event",
-      layout: "layouts/main-layout",
-      phone_number: "+62 858 1564 8255",
-    });
-});
+
+  res.render("Buat_Event/index", {
+    title: "Buat Event",
+    layout: "layouts/main-layout",
+    phone_number: "+62 858 1564 8255",
+  });
+};
 module.exports = {
   createEvent,
   listEvents,
