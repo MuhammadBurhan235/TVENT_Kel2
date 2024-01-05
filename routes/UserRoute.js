@@ -10,6 +10,7 @@ const {
 
 const router = express.Router();
 
+// router.get("/sekretaris/:eventsekreid", eventSekre);
 router.get("/sekretaris", showSekre);
 router.get("/profile-user", profileUser);
 router.post("/verifikasi/:userregisID", verifPanitia);

@@ -61,11 +61,11 @@ app.use("/login", (req, res, next) => {
 //   const { email, password } = req.body;
 //   console.log(email, password);
 //   try {
-//     const user = await prisma.user.findUnique({
-//       where: {
-//         email: email,
-//       },
-//     });
+// const user = await prisma.user.findUnique({
+//   where: {
+//     email: email,
+//   },
+// });
 //     console.log(user);
 
 //     if (!user) {

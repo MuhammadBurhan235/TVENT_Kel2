@@ -1,6 +1,7 @@
 // const Event = require("../models/EventModel.js");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+
 const showSekre = async (req, res) => {
   try {
     const sekreDash = await prisma.user_registered.findMany();
